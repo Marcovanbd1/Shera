@@ -4,69 +4,243 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Neighbourhood Signals</title>
-  <meta name="description" content="Listening earlier. Navigating more safely. Reducing harm before it enters the clinical system." />
+  <meta name="description" content="Neighbourhood Signals is a neighbourhood-level listening and navigation layer that helps surface early signals of uncertainty and turn them into simple, human next steps." />
 
   <style>
     :root{
-      --bg:#0b0f14;
-      --panel:rgba(255,255,255,0.06);
-      --text:rgba(255,255,255,0.92);
-      --muted:rgba(255,255,255,0.72);
-      --soft:rgba(255,255,255,0.58);
-      --line:rgba(255,255,255,0.12);
-      --shadow:0 12px 40px rgba(0,0,0,0.35);
-      --radius:18px;
-      --max:980px;
+      --bg: #0b0f14;
+      --panel: rgba(255,255,255,0.06);
+      --panel2: rgba(255,255,255,0.08);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.72);
+      --soft: rgba(255,255,255,0.58);
+      --line: rgba(255,255,255,0.12);
+      --shadow: 0 12px 40px rgba(0,0,0,0.35);
+      --radius: 18px;
+      --max: 980px;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
     body{
-      margin:0;
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
       background:
         radial-gradient(1200px 700px at 20% -10%, rgba(255,255,255,0.10), transparent 55%),
         radial-gradient(900px 600px at 90% 20%, rgba(255,255,255,0.08), transparent 60%),
         radial-gradient(900px 900px at 40% 110%, rgba(255,255,255,0.06), transparent 60%),
         var(--bg);
-      color:var(--text);
-      line-height:1.55;
+      color: var(--text);
+      line-height: 1.55;
     }
 
-    .wrap{max-width:var(--max);margin:0 auto;padding:28px 18px 80px}
+    a{ color: rgba(255,255,255,0.92); text-decoration: none; }
+    a:hover{ text-decoration: underline; }
+
+    .wrap{
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 28px 18px 80px;
+    }
+
+    .top{
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      padding-top: 6px;
+    }
+
+    .badge{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
 
     .hero{
-      margin-top:18px;padding:28px;border:1px solid var(--line);
-      border-radius:var(--radius);
-      background:linear-gradient(180deg,rgba(255,255,255,0.07),rgba(255,255,255,0.04));
-      box-shadow:var(--shadow)
+      margin-top: 18px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.04));
+      box-shadow: var(--shadow);
     }
 
-    h1{margin:0 0 12px;font-size:clamp(34px,5vw,56px);letter-spacing:-.6px}
-    .sub{color:var(--muted);max-width:70ch}
+    h1{
+      margin: 0 0 10px;
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1.03;
+      letter-spacing: -0.6px;
+    }
+
+    .sub{
+      margin: 0 0 18px;
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--muted);
+      max-width: 72ch;
+    }
+
+    .pills{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .pill{
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      color: var(--soft);
+      font-size: 13px;
+    }
 
     .section{
-      margin-top:18px;padding:22px;border:1px solid var(--line);
-      border-radius:var(--radius);background:rgba(255,255,255,0.04)
+      margin-top: 18px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.04);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.22);
     }
-    .section h2{margin:0 0 10px}
-    .section p{color:var(--muted)}
 
-    .split{display:grid;grid-template-columns:1fr;gap:18px}
-    @media(min-width:860px){.split{grid-template-columns:1.2fr .8fr}}
+    .section h2{
+      margin: 0 0 12px;
+      font-size: 20px;
+      letter-spacing: -0.2px;
+    }
+
+    .section p{
+      margin: 0 0 12px;
+      color: var(--muted);
+      max-width: 78ch;
+    }
+
+    .section p:last-child{ margin-bottom: 0; }
+
+    .grid{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin-top: 12px;
+    }
+
+    @media (min-width: 860px){
+      .grid{ grid-template-columns: 1fr 1fr; }
+    }
+
+    .card{
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .card h3{
+      margin: 0 0 8px;
+      font-size: 16px;
+      letter-spacing: -0.1px;
+    }
+
+    .card p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .quote{
+      margin: 10px 0 0;
+      padding-left: 14px;
+      border-left: 2px solid rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.86);
+      font-size: 18px;
+      letter-spacing: -0.1px;
+      max-width: 72ch;
+    }
+
+    /* --- Image placement with more care (not a big block) --- */
+    .split{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      align-items: start;
+      margin-top: 12px;
+    }
+
+    @media (min-width: 860px){
+      .split{
+        grid-template-columns: 1.2fr 0.8fr; /* text leads, image supports */
+        gap: 18px;
+      }
+    }
 
     .aside{
-      border:1px solid var(--line);border-radius:16px;
-      padding:14px;background:rgba(255,255,255,0.03)
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      padding: 14px;
     }
 
-    .aside img{width:100%;border-radius:14px}
-    figcaption{margin-top:8px;font-size:12px;color:var(--soft)}
+    figure{ margin: 0; }
+
+    .image{
+      margin: 0;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.10);
+      background: rgba(255,255,255,0.02);
+      overflow: hidden;
+      max-width: 420px;          /* cap it so it doesn't dominate */
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.22); /* lighter than before */
+    }
+
+    .image img{
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    figcaption{
+      margin-top: 10px;
+      color: var(--soft);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    /* --- end image placement --- */
+
+    .footer{
+      margin-top: 18px;
+      padding: 18px 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.03);
+      color: var(--soft);
+      font-size: 13px;
+    }
+
+    .footer strong{ color: rgba(255,255,255,0.86); }
   </style>
 </head>
 
 <body>
   <main class="wrap">
+
+    <div class="top">
+      <div class="badge">Neighbourhood Signals</div>
+      <div class="badge">Listening earlier, navigating more safely</div>
+    </div>
 
     <section class="hero">
       <h1>Neighbourhood Signals</h1>
@@ -74,13 +248,182 @@
         A neighbourhood-level listening and navigation layer that sits before people become “patients”,
         at the moment of uncertainty where harm, escalation, and inequity most often begin.
       </p>
+
+      <div class="pills">
+        <div class="pill">Safety-led</div>
+        <div class="pill">Equity by design</div>
+        <div class="pill">Community settings</div>
+        <div class="pill">Not clinical triage</div>
+        <div class="pill">Not a chatbot</div>
+      </div>
     </section>
 
     <section class="section">
       <h2>The moment the system cannot hear</h2>
+      <p>Not at appointments. Not at referrals. Not at records.</p>
       <p>
-        Not at appointments. Not at referrals. Not at records.
-        But before any of that. The moment someone notices something is wrong, but doesn’t yet know what to do.
+        But before any of that. The moment when someone notices something is wrong, but does not yet know what to do.
+        They hesitate, minimise, loop, delay, and tell themselves they are not “bad enough yet”.
+      </p>
+      <p class="quote">
+        This is the most common starting point for harm, escalation, and inequality in the NHS, and it is structurally invisible.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Why this matters</h2>
+      <p>
+        Most health and care systems are designed to respond after a person has already decided what the problem is,
+        how serious it is, who to contact, and how to navigate the system.
+      </p>
+      <p>
+        But uncertainty is not organised, and vulnerability does not arrive with a referral code.
+        People who are less confident, less digitally fluent, less socially supported, more traumatised, more isolated,
+        or more marginalised are far more likely to get lost here.
+      </p>
+      <p>
+        This is where inequity begins. This is where demand silently builds. This is where harm quietly accumulates.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>What Neighbourhood Signals is</h2>
+      <p>
+        Neighbourhood Signals is a new layer of neighbourhood-level listening and navigation infrastructure.
+        It sits before appointments, referrals, and records.
+      </p>
+      <p>
+        It listens for early signs of uncertainty, confusion, and unmet need across a neighbourhood,
+        using lightweight behavioural signals from everyday digital spaces.
+      </p>
+      <p>
+        It then turns what it hears into simple, human next steps people can actually use.
+      </p>
+      <p>
+        Not clinical triage. Not diagnosis. Not automation.
+      </p>
+      <p class="quote">
+        It is a safety and equity layer that makes it easier to find support than to stay confused.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Two connected parts</h2>
+
+      <div class="grid">
+        <div class="card">
+          <h3>1. Neighbourhood-level listening</h3>
+          <p>
+            Small, privacy-safe digital signals are used to understand what a neighbourhood is quietly struggling with.
+            This does not track individuals. It listens to patterns.
+          </p>
+          <p style="margin-top:10px;">
+            Rising searches about food. Spikes in mental health uncertainty. Repeated late-night loops around the same pages.
+            Sudden increases in crisis-related browsing.
+          </p>
+          <p style="margin-top:10px;">
+            These patterns reveal unmet need long before it shows up in clinical demand, allowing neighbourhood teams to respond earlier,
+            more proportionately, and more safely.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>2. Human navigation (Support Playlists)</h3>
+          <p>
+            For individuals, the system provides simple, calm, human next steps. We call these Support Playlists.
+          </p>
+          <p style="margin-top:10px;">
+            They are not directories. They are not search results. They are small, curated, locally grounded sets of support options
+            shaped around what someone is actually experiencing.
+          </p>
+          <p style="margin-top:10px;">
+            They are designed to reduce cognitive load, fear, and decision paralysis at the point where people most need steadiness.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>How the AI is used</h2>
+      <p>
+        This is not a conversation. The AI does not diagnose, generate medical advice, or make decisions about people.
+      </p>
+      <p>
+        We use the model for what it is genuinely good at, understanding messy, unstructured language and recognising the shape of someone’s situation.
+        It then matches that to a controlled, curated set of trusted support routes.
+      </p>
+      <p class="quote">
+        The AI interprets. The system retrieves. The person chooses.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Why this is safer than what we currently do</h2>
+      <p>
+        Current systems assume clarity at the moment of contact. They expect people, at their most uncertain, to act with certainty.
+      </p>
+      <p>
+        Neighbourhood Signals reverses this. It recognises uncertainty as a safety signal, not a user failure.
+      </p>
+      <p>
+        It does not push people into rigid pathways. It does not automate decisions about them. It does not extract clinical data.
+        It provides gentle, proportionate navigation before clinical escalation is required.
+      </p>
+      <p>
+        This reduces inappropriate appointments, avoidable crises, hidden demand, and harm.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Why this matters for equity</h2>
+      <p>
+        The people most likely to struggle at the uncertainty edge are also the people most likely to experience poorer outcomes.
+      </p>
+      <p>
+        This includes people experiencing trauma, people living in poverty, digitally excluded groups, marginalised communities,
+        those with limited social support, and people living with long-term stress.
+      </p>
+      <p>
+        By making early navigation easier, calmer, and more human, Neighbourhood Signals reduces structural disadvantage before it compounds.
+      </p>
+      <p class="quote">
+        Equity is not a downstream adjustment here. It is built into where the system begins to listen.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>What this is not</h2>
+      <p>
+        It is not an EPR module. It is not an AI triage engine. It is not a chatbot. It is not a front door replacement.
+        It does not replace clinical judgement.
+      </p>
+      <p class="quote">
+        It is a neighbourhood safety layer.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>How it fits into the NHS</h2>
+      <p>
+        Neighbourhood Signals works alongside Primary Care Networks, Integrated Neighbourhood Teams, community services,
+        VCSE organisations, and population health teams.
+      </p>
+      <p>
+        It provides early insight into rising neighbourhood needs, proportionate navigation before clinical escalation,
+        safer pathways into support, and a shared language of unmet need.
+      </p>
+      <p>
+        It can connect into existing systems where appropriate, but it does not depend on them to be safe or effective.
+      </p>
+    </section>
+
+    <section class="section">
+      <h2>Why this matters now</h2>
+      <p>Demand is rising. Complexity is rising. Digital inequality is rising. Clinical capacity is finite.</p>
+      <p>But uncertainty is rising faster than any of these.</p>
+      <p>
+        Neighbourhood Signals allows neighbourhoods to listen earlier, respond earlier, and prevent harm earlier.
+        It turns websites into sensors, clicks into stories of need, and uncertainty into safer next steps.
       </p>
     </section>
 
@@ -90,24 +433,39 @@
       <div class="split">
         <div>
           <p>
-            Neighbourhood Signals is designed to travel, quietly and safely, into everyday places.
+            Neighbourhood Signals is designed to travel. Not as a campaign, but as simple, trusted access to support where people already are.
           </p>
           <p>
-            This is what a “live door” looks like in practice, a simple physical access point that captures the
-            moment of uncertainty outside clinical settings.
+            This is what a “live door” looks like in practice, a small physical access point that captures the moment of uncertainty outside clinical settings.
+          </p>
+          <p class="quote">
+            Not a poster. An access point.
           </p>
         </div>
 
         <aside class="aside">
           <figure>
-            <img src="TLS.png" alt="The Local Social QR code door sticker reading 'What’s going on?'" />
+            <div class="image">
+              <img src="TLS.png" alt="A circular Local Social sticker on a door asking 'What’s going on?' with a QR code and thelocalsocial.org." />
+            </div>
             <figcaption>
               A real-world placement capturing the moment of uncertainty, outside clinical settings.
+              One scan, simple next steps, no login, no data collected.
             </figcaption>
           </figure>
         </aside>
       </div>
     </section>
+
+    <section class="section">
+      <h2>The simple promise</h2>
+      <p class="quote">We make finding support easier than staying confused.</p>
+    </section>
+
+    <div class="footer">
+      <strong>Note on boundaries:</strong> Neighbourhood Signals is a neighbourhood safety layer.
+      It is not an EPR module, not an AI triage engine, and not a replacement for clinical judgement.
+    </div>
 
   </main>
 </body>
